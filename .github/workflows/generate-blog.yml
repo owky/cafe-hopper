@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Git
       run: |
@@ -18,14 +18,9 @@ jobs:
 
     - name: Commit changes
       run: |
-        git switch -c test-branch
         touch public/new-blog.html
-        git add public/
-        git commit -m "Update blog."
-        git push origin test-branch
 
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v3
+      uses: peter-evans/create-pull-request@v6
       with:
         title: Update public directory
-        branch: main
