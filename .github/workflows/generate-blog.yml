@@ -4,35 +4,28 @@ on:
   schedule:
     - cron: "0 20 * * *"
 jobs:
-  generate:
+  generate_cafe_hopper_blog:
     runs-on: ubuntu-latest
-    container: ruby
+
     steps:
-      - uses: actions/checkout@v3
-      - name: test
-        run: |
-          bundle install
-          ruby make_blog.rb ${{ secrets.OPEN_AI_API_KEY }}
-      - name: git diff
-        id: diff
-        run: |
-          git config --global --add safe.directory /__w/cafe-hopper/cafe-hopper
-          git diff --exit-code --name-only
-        continue-on-error: true
-      - name: git push
-        if: steps.diff.outcome == 'failure'
-        run: |
-          export BRANCH_NAME="release/$(date +%Y%m%d%H%M)"
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
-          git switch -c ${BRANCH_NAME}
-          git add public
-          git commit -m "Update blog post."
-          git push origin ${BRANCH_NAME}
-      - name: create pull request
-        run: |
-          gh pr create \
-              --title "New blog post." \
-              --body "New blog post by cafe hopper."
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Git
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+
+    - name: Commit changes
+      run: |
+        git switch -c test-branch
+        touch public/new-blog.html
+        git add public/
+        git commit -m "Update blog."
+        git push origin test-branch
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        title: Update public directory
+        branch: main
