@@ -11,10 +11,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Set up Git
-      run: |
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
+    - name: Current date and time
+      id: datetime
+      run: echo "::set-output name=datetime::$(date +'%Y%m%d%H%M%S')"
 
     - name: Commit changes
       run: |
@@ -24,3 +23,4 @@ jobs:
       uses: peter-evans/create-pull-request@v6
       with:
         title: Update public directory
+        branch: create-pull-request/patch-${{ steps.datetime.outputs.datetime }}
