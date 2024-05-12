@@ -6,6 +6,7 @@ on:
 jobs:
   generate_cafe_hopper_blog:
     runs-on: ubuntu-latest
+    container: ruby
 
     steps:
     - name: Checkout repository
@@ -15,9 +16,10 @@ jobs:
       id: datetime
       run: echo "::set-output name=datetime::$(date +'%Y%m%d%H%M%S')"
 
-    - name: Commit changes
+    - name: Genarate blog
       run: |
-        touch public/new-blog2.html
+        bundle install
+        ruby make_blog.rb ${{ secrets.OPEN_AI_API_KEY }}
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v6
