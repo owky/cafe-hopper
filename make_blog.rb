@@ -40,7 +40,7 @@ title = gpt.chat_completion(<<"EOS")
 EOS
 
 def strip_quotes text
-  text =~ /^["「](.+)["」]$/ ? $1 : text
+  text =~ /^["「《](.+)["」》]$/ ? $1 : text
 end
 
 def to_paragraphs text
@@ -48,7 +48,7 @@ def to_paragraphs text
 end
 
 @template = Liquid::Template.parse(File.read("template/blog.html.liquid"))
-File.open("public/blog-#{Time.now.strftime('%Y%m%d%H%M%S')}.html", "w") do |f|
+File.open("public/blog-#{Time.now.strftime('%Y%m%d')}.html", "w") do |f|
   f.puts @template.render(
     'date' => Time.now.strftime("%b. %d, %Y"),
     'title' => strip_quotes(title),
