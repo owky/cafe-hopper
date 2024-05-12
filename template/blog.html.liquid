@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-language" content="ja">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"
+      >
+    <title>{{ title }}</title>
+  </head>
+  <body>
+    <section class="section">
+      <div class="columns">
+        <div class="column is-3"></div>
+        <div class="column">
+          <div class="content">
+            <h1>{{ title }}</h1>
+            <p class="subtitle is-6 has-text-right">{{ date }}</p>
+
+            <div class="block">{{ diary }}</div>
+
+            <div class="block">{{ review }}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

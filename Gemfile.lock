@@ -1,0 +1,13 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    liquid (5.5.0)
+
+PLATFORMS
+  aarch64-linux
+
+DEPENDENCIES
+  liquid
+
+BUNDLED WITH
+   2.4.10
