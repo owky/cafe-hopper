@@ -1,6 +1,6 @@
 require './open_ai_api'
-require 'json'
-require 'liquid'
+require 'yaml'
+require 'date'
 
 API_KEY = ARGV[0]
 
@@ -36,23 +36,9 @@ review = gpt.chat_completion(<<"EOS")
 EOS
 
 title = gpt.chat_completion(<<"EOS")
-最後にこのブログ記事のタイトルを考えてください。"「」"は不要です。
+最後にこのブログ記事のタイトルを考えてください。括弧は不要です。
 EOS
 
-def strip_quotes text
-  text =~ /^["「《](.+)["」》]$/ ? $1 : text
-end
-
-def to_paragraphs text
-  text.split("\n\n").map { |t| "<p>#{t}</p>" }.join
-end
-
-@template = Liquid::Template.parse(File.read("template/blog.html.liquid"))
-File.open("public/blog-#{Time.now.strftime('%Y%m%d')}.html", "w") do |f|
-  f.puts @template.render(
-    'date' => Time.now.strftime("%b. %d, %Y"),
-    'title' => strip_quotes(title),
-    'diary' => to_paragraphs(diary),
-    'review' => to_paragraphs(review)
-  )
-end
+data = { date: Date.today, title: title, diary_block: diary, review_block: review }
+file = "blog-#{Date.today.strftime('%Y%m%d')}.yml"
+File.open("blog/#{file}", "w") { |f| f.puts YAML.dump(data) }
