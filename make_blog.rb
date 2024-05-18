@@ -39,6 +39,6 @@ title = gpt.chat_completion(<<"EOS")
 最後にこのブログ記事のタイトルを考えてください。括弧は不要です。
 EOS
 
-data = { date: Date.today, title: title, diary_block: diary, review_block: review }
+data = { date: Date.today, title: title, image: rand(28), diary_block: diary, review_block: review }
 file = "blog-#{Date.today.strftime('%Y%m%d')}.yml"
 File.open("blog/#{file}", "w") { |f| f.puts YAML.dump(data) }

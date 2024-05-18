@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-language" content="ja">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"
+      >
+    <title>Cafe hopper</title>
+  </head>
+  <body>
+    <section class="section">
+      <div class="columns">
+        <div class="column is-1"></div>
+
+        <div class="column">
+          <div class="grid is-gap-3 is-col-min-12">
+            {% for card in cards %}
+              <div class="cell">
+                {{ card }}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="column is-1"></div>
+      </div>
+    </section>
+  </body>
+</html>
