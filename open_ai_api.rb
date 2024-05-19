@@ -5,9 +5,10 @@ class OpenAi
   GPT35TURBO = 'gpt-3.5-turbo'
   GPT4O = 'gpt-4o'
 
-  def initialize(api_key, model, debug_mode = false)
+  def initialize(api_key, model, json_format = false, debug_mode = false)
     @api_key = api_key
     @model = model
+    @json_format = json_format
     @debug_mode = debug_mode
   end
 
@@ -21,6 +22,8 @@ class OpenAi
       model: @model,
       messages: @conversation << { role: "user", content: message }
     }
+    params.merge!({response_format: {type: "json_object"}}) if @json_format
+
     headers = {
       "Content-Type" => "application/json",
       "Authorization" => "Bearer #{@api_key}"
