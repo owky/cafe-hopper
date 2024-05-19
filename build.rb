@@ -20,6 +20,8 @@ class Builder
       File.open(blog_output_file, "w") { |f| f.puts rendered }
     end
 
+    index.sort_by! { |i| i[:date] }.reverse!
+
     template = Liquid::Template.parse(File.read(card_template_file))
     cards = index.map do |i|
       @data = i
