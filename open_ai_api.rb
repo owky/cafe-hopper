@@ -2,15 +2,23 @@ require 'net/http'
 require 'json'
 
 class OpenAi
-  def initialize(api_key, condition)
+  GPT35TURBO = 'gpt-3.5-turbo'
+  GPT4O = 'gpt-4o'
+
+  def initialize(api_key, model, debug_mode = false)
     @api_key = api_key
-    @conversation = [ { role: "system", content: condition } ]
+    @model = model
+    @debug_mode = debug_mode
+  end
+
+  def system(system_message)
+    @conversation = [ { role: "system", content: system_message } ]
   end
 
   def chat_completion(message)
     uri = ::URI.parse('https://api.openai.com/v1/chat/completions')
     params = {
-      model: 'gpt-3.5-turbo',
+      model: @model,
       messages: @conversation << { role: "user", content: message }
     }
     headers = {
@@ -25,6 +33,14 @@ class OpenAi
     completion = JSON.parse(res.body)["choices"].first["message"]
     @conversation << completion
 
+    log completion if @debug_mode
+
     completion["content"]
+  end
+
+  private
+  def log completion
+    puts completion
+    puts
   end
 end

@@ -13,8 +13,7 @@ class Builder
       rendered = template.render(
         'date' => formatted_date,
         'title' => title_strip_quotes,
-        'diary' => to_paragraphs(@data[:diary_block]),
-        'review' => to_paragraphs(@data[:review_block]),
+        'body' => body_to_html,
         'image_url' => image_url
       )
 
@@ -62,8 +61,8 @@ class Builder
     @data[:title] =~ /^["「《](.+)["」》]$/ ? $1 : @data[:title]
   end
 
-  def to_paragraphs text
-    text.split("\n\n").map { |t| "<p>#{t}</p>" }.join
+  def body_to_html
+    @data[:body].split("\n\n").map { |t| "<p>#{t}</p>" }.join
   end
 
   def image_url
