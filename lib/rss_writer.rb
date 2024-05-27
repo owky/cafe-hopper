@@ -25,7 +25,7 @@ class RssWriter
 
       @articles.each do |a|
         maker.items.new_item do |item|
-          item.link = Blog::URL + "/" + a.file_name
+          item.link = Blog::URL + "/" + a.output_file_name
           item.title = a.title
           item.date = a.time
         end
