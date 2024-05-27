@@ -1,5 +1,6 @@
 require 'liquid'
 require 'yaml'
+require './lib/rss_writer'
 
 class Builder
   def build
@@ -36,6 +37,9 @@ class Builder
     template = Liquid::Template.parse(File.read(index_template_file))
     rendered = template.render('cards' => cards)
     File.open(index_output_file, "w") { |f| f.puts rendered }
+
+    rss = RssWriter.new
+    rss.write
   end
 
   private
