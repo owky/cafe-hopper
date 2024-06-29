@@ -1,8 +1,8 @@
 name: Generate blog
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 20 * * *"
+#  schedule:
+#    - cron: "0 20 * * *"
 jobs:
   generate_cafe_hopper_blog:
     runs-on: ubuntu-latest
